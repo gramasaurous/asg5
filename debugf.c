@@ -1,4 +1,5 @@
-// $Id: debugf.c,v 1.1 2012-11-29 10:02:37-08 - - $
+//Graham Greving
+//ggreving
 
 #include <errno.h>
 #include <stdarg.h>

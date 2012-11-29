@@ -1,4 +1,5 @@
-// $Id: yyextern.h,v 1.1 2012-11-16 18:05:22-08 - - $
+//Graham Greving
+//ggreving
 
 #ifndef __YYEXTERN_H__
 #define __YYEXTERN_H__

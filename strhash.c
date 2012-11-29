@@ -1,4 +1,5 @@
-// $Id: strhash.c,v 1.1 2012-11-29 10:02:37-08 - - $
+//Graham Greving
+//ggreving
 
 #include <assert.h>
 #include <stdio.h>

@@ -1,4 +1,5 @@
-// $Id: debugf.h,v 1.2 2012-11-20 18:22:12-08 - - $
+//Graham Greving
+//ggreving
 
 #ifndef __DEBUGF_H__
 #define __DEBUGF_H__
