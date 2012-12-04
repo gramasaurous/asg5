@@ -54,12 +54,12 @@ void load_dictionary (char *dictionary_name, hashset_ref hashset) {
    //STUBPRINTF ("Open dictionary, load it, close it\n");
    //Loop to load dictionaries into the hashset
    FILE *dict = open_infile(dictionary_name);
+   char *word = NULL;
    while(fgets(word, MAX_WORD_LENGTH, dict)) {
       if (feof(stdin)) {
          printf("EOF\n");
          break;
       }
-      
       put_hashset(hashset, word);
    }
 }
