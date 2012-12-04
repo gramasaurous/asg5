@@ -52,16 +52,27 @@ void load_dictionary (char *dictionary_name, hashset_ref hashset) {
    DEBUGF ('m', "dictionary_name = \"%s\", hashset = %p\n",
            dictionary_name, hashset);
    //STUBPRINTF ("Open dictionary, load it, close it\n");
-   //Loop to load dictionaries into the hashset
+   char buffer[1024];
    FILE *dict = open_infile(dictionary_name);
-   char *word = NULL;
-   while(fgets(word, MAX_WORD_LENGTH, dict)) {
-      if (feof(stdin)) {
-         printf("EOF\n");
-         break;
+   for (int linenr = 1; ; ++linenr) {
+      char *linepos = fgets (buffer, sizeof buffer, dict);
+      if (linepos == NULL) break;
+      linepos = strchr (buffer, '\n');
+      if (linepos == NULL) {
+         fflush (NULL);
+         fprintf (stderr, "%s: %s[%d]: unterminated line\n",
+                  Exec_Name, dictionary_name, linenr);
+         fflush (NULL);
+         Exit_Status = EXIT_FAILURE;
+      }else {
+         *linepos = '\0';
       }
-      put_hashset(hashset, word);
+      linepos = strdup (buffer);
+      assert (linepos != NULL);
+      //insert_queue (queue, linepos);
+      put_hashset(hashset, linepos);
    }
+   printf("Dictionary Loaded.\n");
 }
 
 int main (int argc, char **argv) {
@@ -94,7 +105,7 @@ int main (int argc, char **argv) {
                    break;
       }
    }
-
+   
    // Load the dictionaries into the hash table.
    load_dictionary (default_dictionary, hashset);
    load_dictionary (user_dictionary, hashset);
