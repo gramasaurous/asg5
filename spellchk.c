@@ -74,6 +74,7 @@ void load_dictionary (char *dictionary_name, hashset_ref hashset) {
       assert (linepos != NULL);
       //insert_queue (queue, linepos);
       put_hashset(hashset, linepos);
+      free(linepos);
    }
    fclose(dict);
    printf("Dictionary Loaded.\n");
