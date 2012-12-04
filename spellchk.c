@@ -7,16 +7,19 @@
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
+#include <assert.h>
 
 #include "debugf.h"
 #include "hashset.h"
 #include "yyextern.h"
 
 #define STDIN_NAME       "-"
-#define DEFAULT_DICTNAME "/usr/share/dict/words"
+#define DEFAULT_DICTNAME "./words"
 #define DEFAULT_DICT_POS 0
 #define EXTRA_DICT_POS   1
 #define NUMBER_DICTS     2
+
+#define MAX_WORD_LENGTH 4096
 
 void print_error (char *object, char *message) {
    fflush (NULL);
@@ -48,10 +51,19 @@ void load_dictionary (char *dictionary_name, hashset_ref hashset) {
    if (dictionary_name == NULL) return;
    DEBUGF ('m', "dictionary_name = \"%s\", hashset = %p\n",
            dictionary_name, hashset);
-   STUBPRINTF ("Open dictionary, load it, close it\n");
+   //STUBPRINTF ("Open dictionary, load it, close it\n");
+   //Loop to load dictionaries into the hashset
+   FILE *dict = open_infile(dictionary_name);
+   while(fgets(word, MAX_WORD_LENGTH, dict)) {
+      if (feof(stdin)) {
+         printf("EOF\n");
+         break;
+      }
+      
+      put_hashset(hashset, word);
+   }
 }
 
-
 int main (int argc, char **argv) {
    Exec_Name = basename (argv[0]);
    char *default_dictionary = DEFAULT_DICTNAME;
@@ -91,7 +103,7 @@ int main (int argc, char **argv) {
    if (optind >= argc) {
       yyin = stdin;
       spellcheck (STDIN_NAME, hashset);
-   }else {
+   } else {
       int fileix = optind;
       for (; fileix < argc; ++fileix) {
          DEBUGF ('m', "argv[%d] = \"%s\"\n", fileix, argv[fileix]);

@@ -15,7 +15,7 @@ OBJECTS   = ${CSOURCE:.c=.o} scanner.o
 EXECBIN   = spellchk
 SUBMITS   = ${CHEADER} ${CSOURCE} scanner.l ${MKFILE}
 SOURCES   = ${SUBMITS}
-PROJECT   = cmps012b-wm.f11 asg4
+PROJECT   = cmps012b-wm.f12 asg5
 
 all : ${EXECBIN}
 
@@ -28,7 +28,6 @@ scanner.o : scanner.l
 
 %.o : %.c
 	${GCC} -c $<
-	- git commit -am Automatic Make Commit
 
 clean :
 	- rm ${OBJECTS} ${DEPSFILE} core scanner.c ${EXECBIN}.errs
