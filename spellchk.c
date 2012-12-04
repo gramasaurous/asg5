@@ -56,6 +56,7 @@ void load_dictionary (char *dictionary_name, hashset_ref hashset) {
    //STUBPRINTF ("Open dictionary, load it, close it\n");
    char buffer[1024];
    FILE *dict = open_infile(dictionary_name);
+   assert(dict != NULL);
    for (int linenr = 1; ; ++linenr) {
       char *linepos = fgets (buffer, sizeof buffer, dict);
       if (linepos == NULL) break;
@@ -74,6 +75,7 @@ void load_dictionary (char *dictionary_name, hashset_ref hashset) {
       //insert_queue (queue, linepos);
       put_hashset(hashset, linepos);
    }
+   fclose(dict);
    printf("Dictionary Loaded.\n");
 }
 
