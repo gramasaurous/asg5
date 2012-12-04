@@ -1,4 +1,7 @@
-# $Id: Makefile,v 1.2 2012-11-20 18:25:15-08 - - $
+# Graham Greving
+# ggreving
+# Joe Rowley
+# jrowley
 
 MKFILE    = Makefile
 DEPSFILE  = ${MKFILE}.deps
@@ -39,7 +42,7 @@ git:
 	- git commit -a
 
 submit : ${SUBMITS}
-	submit ${PROJECT} ${SUBMITS}
+	submit ${PROJECT} ${SUBMITS} PARTNER
 
 deps : ${CSOURCE} ${CHEADER}
 	@ echo "# ${DEPSFILE} created `date`" >${DEPSFILE}
