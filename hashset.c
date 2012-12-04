@@ -44,8 +44,9 @@ void free_hashset (hashset_ref hashset) {
 }
 
 void put_hashset (hashset_ref hashset, char *item) {
-   STUBPRINTF ("hashset=%p, item=%s\n", hashset, item);
-   
+   //STUBPRINTF ("hashset=%p, item=%s\n", hashset, item);
+   hashcode_t newhash = strhash(item);
+   printf ("%10u = strhash (\"%s\")\n", newhash, item);
 }
 
 bool has_hashset (hashset_ref hashset, char *item) {
