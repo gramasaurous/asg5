@@ -23,7 +23,7 @@ struct hashset {
 void doublearray(hashset_ref hashset) {
    printf("attempting to double the array\n");
    int oldlength = hashset->length;
-   hashset->length = hashset->length + 1;
+   hashset->length = (hashset->length * 2) + 1;
    char **newarray = malloc (hashset->length * sizeof (char*));
    for (int i = 0; i < oldlength; i++) {
       if (hashset->array[i] == NULL) continue;
