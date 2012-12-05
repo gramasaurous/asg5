@@ -32,7 +32,7 @@ void doublearray(hashset_ref hashset) {
    }
    char **tmp = hashset->array;
    hashset->array = newarray;
-   free(tmp);
+   //free(tmp);
    hashset->load++;
 }
 
