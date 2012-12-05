@@ -25,9 +25,9 @@ void check_hashset(hashset_ref hashset) {
    int j=0;
    printf ("Hashset Length: %Zu \n", hashset->length); 
    for (int i = 0; i < hashset->length; i++){
-   if (hashset->array[i] == NULL) continue;
-   else {
-   printf ("%10d = strhash (\"%s\")\n", i, hashset->array[i]);  
+   if (hashset->array[i] != NULL) {
+   //printf ("%10d = Check (\"%s\")\n", i, hashset->array[i]);  
+   //printf ("%s\n", hashset->array[i]);
    j++;
    }
    }
@@ -84,8 +84,10 @@ void put_hashset (hashset_ref hashset, char *item) {
       if (i == hashset->length) i = 0;
       if (i == start-1) return;
       if (a[i] == NULL) {
-   	   a[i] = item;
+   	   a[i] = strdup(item);
    	   printf ("%10u = strhash (\"%s\")\n", newhash, item);
+   	   //printf ("%s\n", item);
+   	   
    	   hashset->load++;
    	   return;
    	} else {

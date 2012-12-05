@@ -57,6 +57,7 @@ void load_dictionary (char *dictionary_name, hashset_ref hashset) {
    char buffer[1024];
    FILE *dict = open_infile(dictionary_name);
    assert(dict != NULL);
+   //words 
    int j = 0;
    for (int linenr = 1; ; ++linenr) {
       char *linepos = fgets (buffer, sizeof buffer, dict);
@@ -76,11 +77,12 @@ void load_dictionary (char *dictionary_name, hashset_ref hashset) {
       //insert_queue (queue, linepos);
       put_hashset(hashset, linepos);
       free(linepos);
+      //words added
       j++;
    }
    fclose(dict);
    printf("Dictionary Loaded.\n");
-   printf("Words Added: %d", j);
+   printf("Words Added: %d\n", j);
 }
 
 int main (int argc, char **argv) {
