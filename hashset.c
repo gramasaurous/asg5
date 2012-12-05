@@ -20,6 +20,21 @@ struct hashset {
    char **array;
 };
 
+void check_hashset(hashset_ref hashset) {
+   printf("checking hashset\n");
+   int j=0;
+   printf ("Hashset Length: %Zu \n", hashset->length); 
+   for (int i = 0; i < hashset->length; i++){
+   if (hashset->array[i] == NULL) continue;
+   else {
+   printf ("%10d = strhash (\"%s\")\n", i, hashset->array[i]);  
+   j++;
+   }
+   }
+   printf ("Words Present in Hash: %d \n", j);  
+   printf ("Done Checking\n");  
+}
+
 void doublearray(hashset_ref hashset) {
    printf("attempting to double the array\n");
    int oldlength = hashset->length;
@@ -79,6 +94,7 @@ void put_hashset (hashset_ref hashset, char *item) {
    	}
    	i++;
    }
+   
    //printf("Index: %d\n", start);
    //printf ("%10u = strhash (\"%s\")\n", newhash, item);
 }

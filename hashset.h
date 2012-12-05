@@ -31,5 +31,7 @@ void put_hashset (hashset_ref, char*);
 //
 bool has_hashset (hashset_ref, char*);
 
+void check_hashset (hashset_ref);
+
 #endif
 
