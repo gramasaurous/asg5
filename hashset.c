@@ -23,13 +23,13 @@ struct hashset {
 void check_hashset(hashset_ref hashset) {
    printf("checking hashset\n");
    int j=0;
-   printf ("Hashset Length: %Zu \n", hashset->length); 
+   printf ("Hashset Length: %zu \n", hashset->length); 
    for (int i = 0; i < hashset->length; i++){
-   if (hashset->array[i] != NULL) {
-   //printf ("%10d = Check (\"%s\")\n", i, hashset->array[i]);  
-   //printf ("%s\n", hashset->array[i]);
-   j++;
-   }
+      if (hashset->array[i] != NULL) {
+         printf ("%10d = Check (\"%s\")\n", i, hashset->array[i]);  
+         printf ("%s\n", hashset->array[i]);
+         j++;
+      }
    }
    printf ("Words Present in Hash: %d \n", j);  
    printf ("Done Checking\n");  

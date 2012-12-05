@@ -91,6 +91,7 @@ int main (int argc, char **argv) {
    char *user_dictionary = NULL;
    hashset_ref hashset = new_hashset ();
    yy_flex_debug = false;
+   int debug_dump = false;
 
    // Scan the arguments and set flags.
    opterr = false;
@@ -103,7 +104,7 @@ int main (int argc, char **argv) {
                    break;
          case 'n': default_dictionary = NULL;
                    break;
-         case 'x': STUBPRINTF ("-x\n");
+         case 'x': debug_dump = true;
                    break;
          case 'y': yy_flex_debug = true;
                    break;
@@ -119,7 +120,6 @@ int main (int argc, char **argv) {
    // Load the dictionaries into the hash table.
    load_dictionary (default_dictionary, hashset);
    load_dictionary (user_dictionary, hashset);
-   check_hashset(hashset);
 
    // Read and do spell checking on each of the files.
    if (optind >= argc) {
@@ -141,6 +141,7 @@ int main (int argc, char **argv) {
          }
       }
    }
+   if (debug_dump) check_hashset(hashset);
    free_hashset(hashset);
    yycleanup ();
    return Exit_Status;
