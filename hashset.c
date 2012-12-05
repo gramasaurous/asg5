@@ -61,18 +61,21 @@ void free_hashset (hashset_ref hashset) {
 
 void put_hashset (hashset_ref hashset, char *item) {
    //STUBPRINTF ("hashset=%p, item=%s\n", hashset, item);
+   if ((hashset->load * 4) > (int)(hashset->length)) doublearray(hashset);
    hashcode_t newhash = strhash(item);
-   size_t starting_index = newhash % hashset->length;
-   for (size_t i = starting_index;;i++) {
+   size_t start = newhash % hashset->length;
+   for (size_t i = start; ;i++) {
       if (hashset->array[i] == NULL) {
          hashset->array[i] = item;
          break;
       } else {
          int cmp = strcmp(item, hashset->array[i]);
-         if (cmp == 0) break;
-         if (i == hashset->length) i = 0;
-         if (i == starting_index-1) break;
-         if ((hashset->load * 4) > (hashset->length)) doublearray(hashset);
+         if (cmp == 0) break; //item already in hashtable
+         if (i == hashset->length) i = 0; //reached end of hashtable, go to 0
+         if (i == start-1){
+            Exit_Status = EXIT_FAILURE;
+            return;
+         }//not found
       }
    }
    printf ("%10u = strhash (\"%s\")\n", newhash, item);
