@@ -33,6 +33,7 @@ void doublearray(hashset_ref hashset) {
    char **tmp = hashset->array;
    hashset->array = newarray;
    free(tmp);
+   hashset->load++;
 }
 
 hashset_ref new_hashset (void) {
@@ -61,8 +62,8 @@ void free_hashset (hashset_ref hashset) {
 void put_hashset (hashset_ref hashset, char *item) {
    //STUBPRINTF ("hashset=%p, item=%s\n", hashset, item);
    hashcode_t newhash = strhash(item);
-   int starting_index = newhash % hashset->length;
-   for (int i = starting_index;;i++) {
+   size_t starting_index = newhash % hashset->length;
+   for (size_t i = starting_index;;i++) {
       if (hashset->array[i] == NULL) {
          hashset->array[i] = item;
          break;
