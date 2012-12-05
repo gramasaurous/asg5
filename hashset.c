@@ -61,7 +61,7 @@ void free_hashset (hashset_ref hashset) {
 
 void put_hashset (hashset_ref hashset, char *item) {
    //STUBPRINTF ("hashset=%p, item=%s\n", hashset, item);
-   if ((hashset->load * 4) > (int)(hashset->length)) doublearray(hashset);
+   if ((hashset->load * 4) > (hashset->length)) doublearray(hashset);
    hashcode_t newhash = strhash(item);
    size_t start = newhash % hashset->length;
    for (size_t i = start; ;i++) {
