@@ -72,7 +72,6 @@ void load_dictionary (char *dictionary_name, hashset_ref hashset) {
       }
       linepos = strdup (buffer);
       assert (linepos != NULL);
-      //insert_queue (queue, linepos);
       put_hashset(hashset, linepos);
       free(linepos);
    }
@@ -135,7 +134,7 @@ int main (int argc, char **argv) {
          }
       }
    }
-   free_hashset(hashset);
+   //free_hashset(hashset);
    yycleanup ();
    return Exit_Status;
 }

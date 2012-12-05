@@ -22,6 +22,7 @@ struct hashset {
 
 void doublearray(hashset_ref hashset) {
    printf("attempting to double the array\n");
+   /*
    int oldlength = hashset->length;
    hashset->length = (hashset->length * 2) + 1;
    char **newarray = malloc (hashset->length * sizeof (char*));
@@ -34,6 +35,7 @@ void doublearray(hashset_ref hashset) {
    hashset->array = newarray;
    //free(tmp);
    hashset->load++;
+   */
 }
 
 hashset_ref new_hashset (void) {
@@ -61,23 +63,24 @@ void free_hashset (hashset_ref hashset) {
 
 void put_hashset (hashset_ref hashset, char *item) {
    //STUBPRINTF ("hashset=%p, item=%s\n", hashset, item);
-   if ((hashset->load * 4) > (hashset->length)) doublearray(hashset);
    hashcode_t newhash = strhash(item);
-   size_t start = newhash % hashset->length;
-   for (size_t i = start; ;i++) {
+   int start = (newhash % hashset->length);
+   for (int i = start; ;i++) {
       if (hashset->array[i] == NULL) {
          hashset->array[i] = item;
-         break;
+         printf ("hashset[%d] = (\"%s\")\n", i, item);
+         return;
       } else {
          int cmp = strcmp(item, hashset->array[i]);
-         if (cmp == 0) break; //item already in hashtable
-         if (i == hashset->length) i = 0; //reached end of hashtable, go to 0
-         if (i == start-1){
-            Exit_Status = EXIT_FAILURE;
-            return;
-         }//not found
+         if (cmp == 0) return;
+         if (hashset->load * 4 > hashset->length){
+            //double that array;
+            printf("double that array\n");
+            doublearray(hashset);
+         }
       }
    }
+   printf("Index: %d\n", start);
    printf ("%10u = strhash (\"%s\")\n", newhash, item);
 }
 
