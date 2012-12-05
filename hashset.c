@@ -20,8 +20,10 @@ struct hashset {
    char **array;
 };
 
-void doublearray(char **array) {
-   
+void doublearray(hashset_ref hashset, char **array) {
+   assert(array != NULL);
+   hashset->length = hashset->length + 1;
+   new->array = malloc (new->length * sizeof (char*));
 }
 
 hashset_ref new_hashset (void) {
@@ -49,11 +51,19 @@ void free_hashset (hashset_ref hashset) {
 
 void put_hashset (hashset_ref hashset, char *item) {
    //STUBPRINTF ("hashset=%p, item=%s\n", hashset, item);
-   int starting_index = strhash(item) % hashset->lengthl;
+   hashcode_t newhash = strhash(item);
+   int starting_index = newhash % hashset->length;
    for (int i = starting_index;;i++) {
-      if (i == hashset.length) i = 0;
-      if (i == starting_index-1) break;
-      if (load * 4 > length) doublearray(hashset->array);
+      if (hashset->array[i] == NULL) {
+         hashset->array[i] = item;
+         break;
+      } else {
+         int cmp = strcmp(item, hashset->array[i]);
+         if (cmp == 1) break;
+         if (i == hashset->length) i = 0;
+         if (i == starting_index-1) break;
+         if ((hashset->load * 4) > (hashset->length)) doublearray(hashset->array);
+      }
    }
    printf ("%10u = strhash (\"%s\")\n", newhash, item);
 }
