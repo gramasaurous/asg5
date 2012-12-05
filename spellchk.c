@@ -134,7 +134,7 @@ int main (int argc, char **argv) {
          }
       }
    }
-   //free_hashset(hashset);
+   free_hashset(hashset);
    yycleanup ();
    return Exit_Status;
 }
