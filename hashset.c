@@ -20,10 +20,19 @@ struct hashset {
    char **array;
 };
 
-void doublearray(hashset_ref hashset, char **array) {
-   assert(array != NULL);
+void doublearray(hashset_ref hashset) {
+   printf("attempting to double the array\n");
+   int oldlength = hashset->length;
    hashset->length = hashset->length + 1;
-   new->array = malloc (new->length * sizeof (char*));
+   char **newarray = malloc (hashset->length * sizeof (char*));
+   for (int i = 0; i < oldlength; i++) {
+      if (hashset->array[i] == NULL) continue;
+      int newindex = strhash(hashset->array[i]) % hashset->length;
+      newarray[newindex] = hashset->array[i];
+   }
+   char **tmp = hashset->array;
+   hashset->array = newarray;
+   free(tmp);
 }
 
 hashset_ref new_hashset (void) {
@@ -59,10 +68,10 @@ void put_hashset (hashset_ref hashset, char *item) {
          break;
       } else {
          int cmp = strcmp(item, hashset->array[i]);
-         if (cmp == 1) break;
+         if (cmp == 0) break;
          if (i == hashset->length) i = 0;
          if (i == starting_index-1) break;
-         if ((hashset->load * 4) > (hashset->length)) doublearray(hashset->array);
+         if ((hashset->load * 4) > (hashset->length)) doublearray(hashset);
       }
    }
    printf ("%10u = strhash (\"%s\")\n", newhash, item);
