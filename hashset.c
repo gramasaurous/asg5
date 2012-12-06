@@ -26,7 +26,7 @@ void check_hashset(hashset_ref hashset) {
    printf ("Hashset Length: %zu \n", hashset->length); 
    for (int i = 0; i < hashset->length; i++){
       if (hashset->array[i] != NULL) {
-         printf ("%10d = Check (\"%s\")\n", i, hashset->array[i]);  
+        // printf ("%10d = Check (\"%s\")\n", i, hashset->array[i]);  
          printf ("%s\n", hashset->array[i]);
          j++;
       }
@@ -38,8 +38,11 @@ void check_hashset(hashset_ref hashset) {
 void doublearray(hashset_ref hashset) {
    printf("attempting to double the array\n");
    int oldlength = hashset->length;
-   hashset->length = (hashset->length * 2) + 1;
+   hashset->length = (oldlength * 2) + 1;
    char **newarray = malloc (hashset->length * sizeof (char*));
+   for (int i = 0; i < hashset-> length; i++) {
+      newarray[i] = NULL;
+   }
    for (int i = 0; i < oldlength; i++) {
       if (hashset->array[i] == NULL) continue;
       int newindex = strhash(hashset->array[i]) % hashset->length;
@@ -85,8 +88,8 @@ void put_hashset (hashset_ref hashset, char *item) {
       if (i == start-1) return;
       if (a[i] == NULL) {
    	   a[i] = strdup(item);
-   	   printf ("%10u = strhash (\"%s\")\n", newhash, item);
-   	   //printf ("%s\n", item);
+   	   //printf ("%10u = strhash (\"%s\")\n", newhash, item);
+   	   printf ("%s\n", item);
    	   
    	   hashset->load++;
    	   return;
