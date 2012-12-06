@@ -12,7 +12,7 @@
 #include "hashset.h"
 #include "strhash.h"
 
-#define HASH_NEW_SIZE 250
+#define HASH_NEW_SIZE 15
 
 struct hashset {
    size_t length;
