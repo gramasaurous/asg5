@@ -80,9 +80,13 @@ void put_hashset (hashset_ref hashset, char *item) {
    //STUBPRINTF ("hashset=%p, item=%s\n", hashset, item);
    if ((hashset->load * 4) > hashset->length) doublearray(hashset);
    hashcode_t newhash = strhash(item);
-   int start = (newhash % hashset->length);
-   int i = start;
-   char **a = hashset->array;
+   int index = (newhash % hashset->length);
+   while (hashset->array[index] != NULL) {
+      if (strcmp(hashset->array[index], item) == 0) return;
+      index = index+1 % hashset->length;
+   }
+   hashset->array[index] = strdup(item);
+   /*
    while(1) {
       if (i == hashset->length) i = 0;
       if (i == start-1) return;
@@ -90,7 +94,6 @@ void put_hashset (hashset_ref hashset, char *item) {
    	   a[i] = strdup(item);
    	   //printf ("%10u = strhash (\"%s\")\n", newhash, item);
    	   printf ("%s\n", item);
-   	   
    	   hashset->load++;
    	   return;
    	} else {
@@ -99,7 +102,7 @@ void put_hashset (hashset_ref hashset, char *item) {
    	}
    	i++;
    }
-   
+   */
    //printf("Index: %d\n", start);
    //printf ("%10u = strhash (\"%s\")\n", newhash, item);
 }
