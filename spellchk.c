@@ -27,7 +27,7 @@ void print_error (char *object, char *message) {
    fflush (NULL);
    fprintf (stderr, "%s: %s: %s\n", Exec_Name, object, message);
    fflush (NULL);
-   Exit_Status = EXIT_FAILURE;
+   Exit_Status = 2;
 }
 
 FILE *open_infile (char *filename) {
@@ -60,6 +60,10 @@ void load_dictionary (char *dictionary_name, hashset_ref hashset) {
    //STUBPRINTF ("Open dictionary, load it, close it\n");
    char buffer[1024];
    FILE *dict = open_infile(dictionary_name);
+   if (dict == NULL) {
+   print_error(dictionary_name, "No such file or directory");
+   return;
+   }
    assert(dict != NULL);
    //words 
    int j = 0;
@@ -72,7 +76,7 @@ void load_dictionary (char *dictionary_name, hashset_ref hashset) {
          fprintf (stderr, "%s: %s[%d]: unterminated line\n",
                   Exec_Name, dictionary_name, linenr);
          fflush (NULL);
-         Exit_Status = EXIT_FAILURE;
+         Exit_Status = 2;
       }else {
          *linepos = '\0';
       }
