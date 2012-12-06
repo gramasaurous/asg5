@@ -7,7 +7,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-
+#include <ctype.h>
 #include "debugf.h"
 #include "hashset.h"
 #include "strhash.h"
@@ -95,6 +95,18 @@ bool has_hashset (hashset_ref hashset, char *item) {
    hashcode_t index = (strhash(item) % hashset->length);
    while (hashset->array[index] != NULL) {
       if (strcmp (hashset->array[index], item) == 0) return true;
+      index = (index + 1) % hashset->length;
+   }
+   //converting to lower
+   int i=0;
+   char *lower = strdup(item); 
+   while (item[i] != NULL){
+    lower[i] = (tolower(item[i]));
+    i++;
+   }
+   index = (strhash(lower) % hashset->length);
+   while (hashset->array[index] != NULL) {
+      if (strcmp (hashset->array[index], lower) == 0) return true;
       index = (index + 1) % hashset->length;
    }
    return false;
