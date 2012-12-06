@@ -12,7 +12,7 @@
 #include "hashset.h"
 #include "strhash.h"
 
-#define HASH_NEW_SIZE 15
+#define HASH_NEW_SIZE 250
 
 struct hashset {
    size_t length;
@@ -22,7 +22,7 @@ struct hashset {
 
 void check_hashset(hashset_ref hashset) {
    printf("checking hashset\n");
-   int j=0;
+   unsigned int j = 0;
    printf ("Hashset Length: %zu \n", hashset->length); 
    for (int i = 0; i < hashset->length; i++){
       if (hashset->array[i] != NULL) {
@@ -40,12 +40,14 @@ void doublearray(hashset_ref hashset) {
    int oldlength = hashset->length;
    hashset->length = (oldlength * 2) + 1;
    char **newarray = malloc (hashset->length * sizeof (char*));
-   for (int i = 0; i < hashset-> length; i++) {
-      newarray[i] = NULL;
-   }
+   for (int i = 0; i < hashset-> length; i++) newarray[i] = NULL;
    for (int i = 0; i < oldlength; i++) {
       if (hashset->array[i] == NULL) continue;
       int newindex = strhash(hashset->array[i]) % hashset->length;
+      while (newarray[newindex] != NULL) {
+         if ( strcmp (newarray[newindex], hashset->array[i]) == 0) break;
+         newindex = (newindex + 1) % hashset->length;
+      }
       newarray[newindex] = hashset->array[i];
    }
    char **tmp = hashset->array;
@@ -77,15 +79,17 @@ void free_hashset (hashset_ref hashset) {
 }
 
 void put_hashset (hashset_ref hashset, char *item) {
-   //STUBPRINTF ("hashset=%p, item=%s\n", hashset, item);
+   //need doubling?
    if ((hashset->load * 4) > hashset->length) doublearray(hashset);
-   hashcode_t newhash = strhash(item);
-   int index = (newhash % hashset->length);
+   
+   hashcode_t index = (strhash(item) % hashset->length);
    while (hashset->array[index] != NULL) {
-      if (strcmp(hashset->array[index], item) == 0) return;
-      index = index+1 % hashset->length;
+      if ( strcmp (hashset->array[index], item) == 0) break;
+      index = (index + 1) % hashset->length;
    }
    hashset->array[index] = strdup(item);
+   hashset->load++;
+   
    /*
    while(1) {
       if (i == hashset->length) i = 0;
