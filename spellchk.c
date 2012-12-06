@@ -82,8 +82,8 @@ void load_dictionary (char *dictionary_name, hashset_ref hashset) {
       j++;
    }
    fclose(dict);
-   printf("Dictionary Loaded.\n");
-   printf("Words Added: %d\n", j);
+   //printf("Dictionary Loaded.\n");
+   //printf("Words Added: %d\n", j);
 }
 
 int main (int argc, char **argv) {
@@ -122,8 +122,8 @@ int main (int argc, char **argv) {
    load_dictionary (default_dictionary, hashset);
    load_dictionary (user_dictionary, hashset);
    
-   if (has_hashset(hashset, "bitchface")) printf("a word\n");
-   else printf("not a word\n");
+   //if (has_hashset(hashset, "bitchface")) printf("a word\n");
+   //else printf("not a word\n");
    
    // Read and do spell checking on each of the files.
    if (optind >= argc) {

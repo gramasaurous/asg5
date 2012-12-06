@@ -36,7 +36,7 @@ void check_hashset(hashset_ref hashset) {
 }
 
 void doublearray(hashset_ref hashset) {
-   printf("attempting to double the array\n");
+   //printf("attempting to double the array\n");
    int oldlength = hashset->length;
    hashset->length = (oldlength * 2) + 1;
    char **newarray = malloc (hashset->length * sizeof (char*));
@@ -109,6 +109,7 @@ bool has_hashset (hashset_ref hashset, char *item) {
       if (strcmp (hashset->array[index], lower) == 0) return true;
       index = (index + 1) % hashset->length;
    }
+   free(lower);
    return false;
 }
 
