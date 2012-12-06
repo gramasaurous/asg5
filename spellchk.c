@@ -46,7 +46,10 @@ void spellcheck (char *filename, hashset_ref hashset) {
       if (token == 0) break;
       DEBUGF ('m', "line %d, yytext = \"%s\"\n", yylineno, yytext);
       if (has_hashset(hashset, yytext)) continue;
-      else printf("%s: %d: %s\n", filename, yylineno, yytext);
+      else {
+      printf("%s: %d: %s\n", filename, yylineno, yytext);
+      if (Exit_Status == 0) Exit_Status++;
+      }
    }
 }
 
