@@ -30,11 +30,29 @@ void check_hashset(hashset_ref hashset, int debuga) {
    for (size_t i = 0; i < hashset-> length/4; i++) cluster[i] = NULL;
    int clucount = 0; 
    for (int i = 0; i < hashset->length; i++){
-      if (hashset->array[i] != NULL) {
-      j++;
+      if (hashset->length == i-1){ //the last element of the array
+           if ((hashset->array[i] =! NULL) && (hashset->array[0] == NULL)) {
+              ++cluster[clucount];
+              clucount = 0;
+           }
+           if ((hashset->array[i] == NULL) && (hashset->array[0] == NULL)) {
+              //merge two clusers
+              int firstclucount=0;
+              for (int k = 0; k < hashset->length; k++){
+                  //find length of 1st cluster
+                  if (hashset->array[k] != NULL) {
+                      ++firstclucount;
+                      }
+                  else {
+                      --cluster[firstclucount];
+                      ++cluster[firstclucount + clucount];
+                  }
+              }
+           }
+      }     
+      else if (hashset->array[i] != NULL) {
+      j++;          //for counting number of words in hashset
       ++clucount;
-      
-      //clucount = 0;
       }
       else {
       ++cluster[clucount];
@@ -43,12 +61,14 @@ void check_hashset(hashset_ref hashset, int debuga) {
    }
    printf ("%10d words in the hash set\n", j);  
    printf ("%10zu length of the hash array\n", hashset->length); 
+   int sum = 0;
    for (int i = 1; i < hashset-> length/4; i++) {
       if (cluster[i] != 0) {
          printf("%10d clusters of size %i\n", cluster[i] , i);
+         sum+=(cluster[i]*i);
       }
    }
-   
+   //printf("%10d Sum of clusters which should equal word count\n", sum);
    if (debuga > 1) {
        for (int i = 0; i < hashset->length; i++){
           if (hashset->array[i] != NULL) {

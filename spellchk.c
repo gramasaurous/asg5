@@ -16,7 +16,8 @@
 #include "yyextern.h"
 
 #define STDIN_NAME       "-"
-#define DEFAULT_DICTNAME "./words"
+#define DEFAULT_DICTNAME "/usr/share/dict/words"
+//#define DEFAULT_DICTNAME "./words"
 #define DEFAULT_DICT_POS 0
 #define EXTRA_DICT_POS   1
 #define NUMBER_DICTS     2
