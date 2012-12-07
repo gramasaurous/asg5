@@ -146,7 +146,7 @@ bool has_hashset (hashset_ref hashset, char *item) {
    }
    //converting to lower
    int i=0;
-   char *lower = strdup(item); 
+   char *lower = item; 
    while (item[i] != NULL){
     lower[i] = (tolower(item[i]));
     i++;
@@ -157,7 +157,7 @@ bool has_hashset (hashset_ref hashset, char *item) {
       index = (index + 1) % hashset->length;
    }
    //free(item);
-   free(lower);
+   //free(lower);
    return false;
 }
 

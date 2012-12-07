@@ -15,9 +15,9 @@ my %options;
 getopts "nd:", \%options;
 
 my %dictionary;
-my $defdict = "words";
+#my $defdict = "words";
 #my $defdict = "/afs/cats.ucsc.edu/courses/cmps012b-wm/usr/dict/words";
-
+my $defdict = "/usr/share/dict/words";
 sub load_dictionary($) {
    my ($dictname) = @_;
    open my $dict, "<$dictname" or do {warn "$dictname: $!\n"; return};
