@@ -156,6 +156,7 @@ bool has_hashset (hashset_ref hashset, char *item) {
       if (strcmp (hashset->array[index], lower) == 0) return true;
       index = (index + 1) % hashset->length;
    }
+   //free(item);
    free(lower);
    return false;
 }
