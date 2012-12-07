@@ -128,16 +128,17 @@ int main (int argc, char **argv) {
    // Load the dictionaries into the hash table.
    load_dictionary (default_dictionary, hashset);
    load_dictionary (user_dictionary, hashset);
-   if (debug_dump > 0) {
+   if (debug_dump > 1) {
    check_hashset(hashset, debug_dump);
+   yycleanup ();
    free_hashset(hashset);
-   //yycleanup ();
    return Exit_Status;
    }
    //if (has_hashset(hashset, "bitchface")) printf("a word\n");
    //else printf("not a word\n");
    
    // Read and do spell checking on each of the files.
+   if (debug_dump = 1) check_hashset(hashset, debug_dump);
    if (optind >= argc) {
       yyin = stdin;
       spellcheck (STDIN_NAME, hashset);

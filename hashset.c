@@ -93,6 +93,7 @@ hashset_ref new_hashset (void) {
 
 void free_hashset (hashset_ref hashset) {
    DEBUGF ('h', "free (%p), free (%p)\n", hashset->array, hashset);
+   for (int i = 0; i < hashset-> length; i++) free(hashset->array[i]);
    memset (hashset->array, 0, hashset->length * sizeof (char*));
    free (hashset->array);
    memset (hashset, 0, sizeof (struct hashset));
