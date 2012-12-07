@@ -23,7 +23,8 @@ struct hashset {
 void check_hashset(hashset_ref hashset, int debuga) {
    //printf("checking hashset\n");
    unsigned int j = 0;
-   //create a cluster array length 1/4th the main hashset since it wont be full
+   //create a cluster array length 1/4th the main hashset
+   //since it wont be full
    int cluster[hashset->length/4];// = malloc (* sizeof (int));
    //null the new array
    for (int i = 0; i < hashset-> length/4; i++) cluster[i] = NULL;
@@ -43,14 +44,17 @@ void check_hashset(hashset_ref hashset, int debuga) {
    printf ("%10d words in the hash set\n", j);  
    printf ("%10zu length of the hash array\n", hashset->length); 
    for (int i = 1; i < hashset-> length/4; i++) {
-      if (cluster[i]!= 0) printf("%10d clusters of size %i\n", cluster[i] , i);
+      if (cluster[i] != 0) {
+         printf("%10d clusters of size %i\n", cluster[i] , i);
+      }
    }
    
    if (debuga > 1) {
        for (int i = 0; i < hashset->length; i++){
           if (hashset->array[i] != NULL) {
-             printf("array[%10d] = %12u \"%s\"\n", i , strhash(hashset->array[i])           
-             ,hashset->array[i]);
+             char *word = hashset->array[i];
+             hashcode_t hash = strhash(word);
+             printf("array[%10d] = %12u \"%s\"\n", i, hash, word);
              }
         }
    }
@@ -66,7 +70,7 @@ void doublearray(hashset_ref hashset) {
       if (hashset->array[i] == NULL) continue;
       int newindex = strhash(hashset->array[i]) % hashset->length;
       while (newarray[newindex] != NULL) {
-         if ( strcmp (newarray[newindex], hashset->array[i]) == 0) break;
+         if (strcmp(newarray[newindex], hashset->array[i]) == 0) break;
          newindex = (newindex + 1) % hashset->length;
       }
       newarray[newindex] = hashset->array[i];
