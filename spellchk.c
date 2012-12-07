@@ -138,7 +138,7 @@ int main (int argc, char **argv) {
    //else printf("not a word\n");
    
    // Read and do spell checking on each of the files.
-   if (debug_dump = 1) check_hashset(hashset, debug_dump);
+   if (debug_dump == 1) check_hashset(hashset, debug_dump);
    if (optind >= argc) {
       yyin = stdin;
       spellcheck (STDIN_NAME, hashset);
