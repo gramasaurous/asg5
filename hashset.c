@@ -23,12 +23,29 @@ struct hashset {
 void check_hashset(hashset_ref hashset, int debuga) {
    //printf("checking hashset\n");
    unsigned int j = 0;
+   //create a cluster array length 1/4th the main hashset since it wont be full
+   int cluster[hashset->length/4];// = malloc (* sizeof (int));
+   //null the new array
+   for (int i = 0; i < hashset-> length/4; i++) cluster[i] = NULL;
+   int clucount = 0; 
    for (int i = 0; i < hashset->length; i++){
-      if (hashset->array[i] != NULL) j++;
+      if (hashset->array[i] != NULL) {
+      j++;
+      ++clucount;
+      
+      //clucount = 0;
+      }
+      else {
+      ++cluster[clucount];
+      clucount = 0;
+      }
    }
-   printf ("Hashset Length: %zu \n", hashset->length); 
-   printf ("Words Present in Hash: %d \n", j);  
-   printf ("Done Checking\n");  
+   printf ("%10d words in the hash set\n", j);  
+   printf ("%10zu length of the hash array\n", hashset->length); 
+   for (int i = 1; i < hashset-> length/4; i++) {
+      if (cluster[i]!= 0) printf("%10d clusters of size %i\n", cluster[i] , i);
+   }
+   
    if (debuga > 1) {
        for (int i = 0; i < hashset->length; i++){
           if (hashset->array[i] != NULL) {
