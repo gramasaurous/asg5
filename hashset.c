@@ -27,7 +27,7 @@ void check_hashset(hashset_ref hashset, int debuga) {
    //since it wont be full
    int cluster[hashset->length/4];// = malloc (* sizeof (int));
    //null the new array
-   for (int i = 0; i < hashset-> length/4; i++) cluster[i] = NULL;
+   for (size_t i = 0; i < hashset-> length/4; i++) cluster[i] = NULL;
    int clucount = 0; 
    for (int i = 0; i < hashset->length; i++){
       if (hashset->array[i] != NULL) {
@@ -122,6 +122,7 @@ bool has_hashset (hashset_ref hashset, char *item) {
    while (hashset->array[index] != NULL) {
       if (strcmp (hashset->array[index], item) == 0) return true;
       index = (index + 1) % hashset->length;
+      
    }
    //converting to lower
    int i=0;
