@@ -20,19 +20,23 @@ struct hashset {
    char **array;
 };
 
-void check_hashset(hashset_ref hashset) {
-   printf("checking hashset\n");
+void check_hashset(hashset_ref hashset, int debuga) {
+   //printf("checking hashset\n");
    unsigned int j = 0;
-   printf ("Hashset Length: %zu \n", hashset->length); 
    for (int i = 0; i < hashset->length; i++){
-      if (hashset->array[i] != NULL) {
-        // printf ("%10d = Check (\"%s\")\n", i, hashset->array[i]);  
-         printf ("%s\n", hashset->array[i]);
-         j++;
-      }
+      if (hashset->array[i] != NULL) j++;
    }
+   printf ("Hashset Length: %zu \n", hashset->length); 
    printf ("Words Present in Hash: %d \n", j);  
    printf ("Done Checking\n");  
+   if (debuga > 1) {
+       for (int i = 0; i < hashset->length; i++){
+          if (hashset->array[i] != NULL) {
+             printf("array[%10d] = %12u \"%s\"\n", i , strhash(hashset->array[i])           
+             ,hashset->array[i]);
+             }
+        }
+   }
 }
 
 void doublearray(hashset_ref hashset) {
